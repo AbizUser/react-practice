@@ -15,9 +15,8 @@ const Lesson1_2 = () => {
           onChange={(e: ChangeEvent<HTMLInputElement>) => 
             setForm(
               {
-              firstName: e.target.value,
-              lastName: form.lastName,
-              email: form.email,
+                ...form, 
+                firstName: e.target.value,
             })
           } 
           type="text" 
@@ -29,9 +28,8 @@ const Lesson1_2 = () => {
           onChange={(e: ChangeEvent<HTMLInputElement>) => 
             setForm(
               {
-              firstName: form.firstName,
-              lastName: form.lastName,
-              email: e.target.value,
+                ...form, 
+                lastName: e.target.value,
             })
           } 
           type="text" 
@@ -43,9 +41,8 @@ const Lesson1_2 = () => {
           onChange={(e: ChangeEvent<HTMLInputElement>) => 
             setForm(
               {
-              firstName: form.firstName,
-              lastName: form.lastName,
-              email: e.target.value,
+                ...form, 
+                email: e.target.value,
             })
           } 
           type="text" 
