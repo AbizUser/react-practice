@@ -1,7 +1,21 @@
+import { cache } from "swr/_internal";
 import { useFetchUser } from "./hooks/useFetchUser";
+import useSWR from "swr";
 
-const Lesson2_3: React.FC = () => {
-  const {user, loading} = useFetchUser(4);
+const fetcher = (url: string) => fetch(url).then((r) => r.json());
+
+const Lesson2_3 = () => {
+  // const {user, loading} = useFetchUser(4);
+  
+  const {
+    data: user ,
+    isLoading:loading ,
+    error
+  } = useSWR(`https://jsonplaceholder.typicode.com/users/3`, fetcher)
+  //検証画面のネットワークタブ内、Fetch/XHRから速度の参照可能
+
+  console.log(cache);
+  //キャッシュされた内容を検証画面のコンソールから参照可能
 
   if (loading) {
     return <div>Loading...</div>;
