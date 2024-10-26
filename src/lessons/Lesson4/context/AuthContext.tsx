@@ -1,4 +1,4 @@
-import {createContext, ReactNode, useContext, useState } from "react";
+import {createContext, ReactNode, useCallback, useContext, useMemo, useState } from "react";
 
 type User = {
   id: string;
@@ -25,25 +25,40 @@ export const useAuth = () => {
 const AuthProvider = ({children}: { children: ReactNode}) => {
   const [user, setUser] = useState<User | null>(null);
 
-  const login = (userInfo: User) => {
-    if(
-      userInfo.username === "testUser" && 
-      userInfo.email === "testuser@mail.com"
-    ) {
-      setUser(userInfo);
-    } else {
-      console.log("cant logged in")
-    }
-  };
-  const logout = ()  => {
-    setUser(null);
-  };
+  const login = 
+  useCallback(
+    () => {
+      (userInfo: User) => {
+        if(
+          userInfo.username === "testUser" && 
+          userInfo.email === "testuser@mail.com"
+        ) {
+          setUser(userInfo);
+        } else {
+          console.log("cant logged in")
+        }
+      };
+    },[]);
 
-  const contextValue = {
-    user,
-    login,
-    logout,
-  };
+const logout = 
+useCallback(
+  () => {
+    ()  => {
+      setUser(null);
+    };
+  },
+  [],);
+
+  const contextValue = useMemo(
+    () => ({
+      user,
+      login,
+      logout,
+    }),
+  [user, login, logout]
+);
+
+// user, login, logoutが更新されたときに再生成される。
 
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>

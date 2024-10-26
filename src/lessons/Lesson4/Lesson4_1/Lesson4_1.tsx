@@ -3,6 +3,9 @@ import { useAuth } from "../context/AuthContext";
 
 //認証用プロバイダの作成
 
+//〇メモ化
+//再レンダリングされる度に今まで使用していた関数や値が再生成されないように行う
+
 const Lesson4_1 = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -34,8 +37,6 @@ const Lesson4_1 = () => {
         />
         <button onClick={handleLogin}>ログイン</button>
       </div>}
-
-
     </div>
   );
 };
